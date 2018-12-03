@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, props) => ({
   submit(item) {
     dispatch(addItem(item));
-    props.navigation.back();
+    props.navigation.navigate('SelectIngredient');
   },
 });
 
