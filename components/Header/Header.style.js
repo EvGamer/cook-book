@@ -1,16 +1,13 @@
 import { StyleSheet } from 'react-native';
 import color from '../../color';
 
-
 export default StyleSheet.create({
   frame: {
-    margin: 5,
-    backgroundColor: color.message.blue,
+    backgroundColor: color.background,
   },
   text: {
-    margin: 5,
-    color: color.text,
+    padding: 10,
     fontSize: 25,
-    padding: 5,
+    color: color.text,
   },
 });

@@ -6,8 +6,4 @@ export default StyleSheet.create({
     backgroundColor: color.background,
     flex: 1,
   },
-  text: {
-    color: color.text,
-  },
-
 });

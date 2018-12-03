@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View, FlatList, Text } from 'react-native';
 
-import { ItemEntry } from '../index';
+import { ItemEntry, Header } from '../';
 import style from './ItemList.style';
 
 const fromId = item => `${item.id}`;
@@ -27,11 +27,9 @@ class ItemList extends PureComponent {
 
   handleItemPress = id => {
     this.props.select(id);
-    this.setState({ selected: id });
   };
 
   renderItem = (entry) => {
-    console.log(entry);
     return (
       <ItemEntry
         id={entry.item.id}
@@ -44,7 +42,7 @@ class ItemList extends PureComponent {
   render() {
     return (
       <View style={style.screen}>
-        <Text style={style.text}>{this.props.title} {this.state.selected}</Text>
+        <Header>{this.props.title}</Header>
         <FlatList
           keyExtractor={fromId}
           data={this.props.itemList}
