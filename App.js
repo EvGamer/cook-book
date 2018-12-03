@@ -13,6 +13,10 @@ import {
   View,
   Button,
 } from 'react-native';
+import { Provider } from 'react-redux';
+
+import { createStore } from './redux';
+
 
 const styles = StyleSheet.create({
   screen: {
@@ -43,14 +47,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const store = createStore();
+
 export default function App() {
   return (
-    <View style={styles.screen}>
-      <View style={styles.header}>
-        <Text style={styles.title}>
-          Items
-        </Text>
+    <Provider store={store}>
+      <View style={styles.screen}>
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            Items
+          </Text>
+        </View>
       </View>
-    </View>
+    </Provider>
   );
 }
