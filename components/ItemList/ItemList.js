@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 
 import { ItemEntry, Header } from '../';
 import style from './ItemList.style';
@@ -11,7 +11,7 @@ class ItemList extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     itemList: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       name: PropTypes.string,
     })),
     select: PropTypes.func,

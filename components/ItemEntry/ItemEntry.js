@@ -7,7 +7,7 @@ import style from './ItemEntry.style';
 class ItemEntry extends PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    name: PropTypes.number,
+    name: PropTypes.string,
     onPress: PropTypes.func,
   };
 

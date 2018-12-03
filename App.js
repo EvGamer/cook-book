@@ -9,16 +9,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { DrawerNavigator } from 'react-navigation';
-import { SelectIngredient } from './screens';
-
-const navConfig = {
-  Home: {
-    title: 'Select Ingredient',
-    screen: SelectIngredient,
-  },
-};
+import { SelectIngredient, AddItem } from './screens';
 
 import { createStore } from './redux';
+
+const navConfig = {
+  SelectIngredient: {
+    drawerLabel: 'Select Ingredient',
+    screen: SelectIngredient,
+  },
+  AddItem: {
+    drawerLabel: 'Add Item',
+    screen: AddItem,
+  },
+};
 
 const store = createStore();
 

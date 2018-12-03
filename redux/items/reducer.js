@@ -1,4 +1,5 @@
 import { createReducer } from '../utils';
+import { ADD_ITEM } from './actions';
 
 const initialState = {
   list: [
@@ -15,4 +16,9 @@ const initialState = {
   ],
 };
 
-export default createReducer(initialState, {});
+export default createReducer(initialState, {
+  [ADD_ITEM]: (state, { payload }) => ({
+    ...state,
+    list: [...state.list, payload],
+  }),
+});
