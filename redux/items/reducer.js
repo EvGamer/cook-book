@@ -8,6 +8,10 @@ const initialState = {
     { id: 4, name: 'Plastic' },
     { id: 5, name: 'Copper plate' },
     { id: 6, name: 'Copper ore' },
+    { id: 7, name: 'CH4' },
+    { id: 8, name: 'Coal' },
+    { id: 9, name: 'Iron plate' },
+    { id: 10, name: 'Iron ore' },
   ],
 };
 
