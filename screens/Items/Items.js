@@ -85,11 +85,17 @@ class Items extends PureComponent {
       );
     }
     return (
-      <ItemList
-        title="Items"
-        itemList={this.props.itemList}
-        select={this.selectToEdit}
-      />
+      <View style={style.screen}>
+        <ItemList
+          title="Items"
+          itemList={this.props.itemList}
+          select={this.selectToEdit}
+        />
+        <Button
+          onPress={this.openCreateItemScreen}
+          title="Add Item"
+        />
+      </View>
     );
   }
 }

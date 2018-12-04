@@ -1,5 +1,3 @@
-import { unionBy } from 'lodash';
-
 import { createReducer } from '../utils';
 import { ADD_ITEM, SET_ITEM } from './actions';
 
@@ -17,7 +15,6 @@ const initialState = {
     { id: '10', name: 'Iron ore' },
   ],
 };
-
 
 
 export default createReducer(initialState, {
