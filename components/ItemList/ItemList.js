@@ -23,8 +23,6 @@ class ItemList extends PureComponent {
     select() {},
   };
 
-  state = { selected: 0 };
-
   handleItemPress = id => {
     this.props.select(id);
   };

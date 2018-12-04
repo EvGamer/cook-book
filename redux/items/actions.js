@@ -7,3 +7,12 @@ export function addItem(payload) {
   };
 }
 
+export const SET_ITEM = 'SET_ITEM';
+
+export function setItem(payload) {
+  return {
+    type: SET_ITEM,
+    payload,
+  };
+}
+

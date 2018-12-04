@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, Text } from 'react-native';
 import { v4 as getID } from 'uuid';
 
 import { Header } from '../';
@@ -8,14 +8,19 @@ import { Header } from '../';
 class EditItem extends Component {
   static propTypes = {
     title: PropTypes.string,
+    item: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+    }),
     submit: PropTypes.func,
-    item: PropTypes.func,
+    cancel: PropTypes.func,
   };
 
   static defaultProps = {
     title: 'Edit Item',
-    submit() {},
     item: null,
+    submit() {},
+    cancel() {},
   };
 
   constructor(props, context){
@@ -46,11 +51,16 @@ class EditItem extends Component {
     this.props.submit({ id, name });
   };
 
+  cancel = () => {
+    this.props.cancel();
+  };
+
   render() {
     return (
       <View>
         <Header>{this.props.title}</Header>
         <View>
+          <Text>Name</Text>
           <TextInput
             onChangeText={this.handleNameChange}
             value={this.state.name}
@@ -59,6 +69,11 @@ class EditItem extends Component {
         <Button
           onPress={this.submit}
           title="Submit"
+        />
+        <Button
+          onPress={this.cancel}
+          title="Cancel"
+          color="red"
         />
       </View>
     );

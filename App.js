@@ -9,18 +9,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { DrawerNavigator } from 'react-navigation';
-import { SelectIngredient, AddItem } from './screens';
+import { Items } from './screens';
 
 import { createStore } from './redux';
 
 const navConfig = {
-  SelectIngredient: {
-    drawerLabel: 'Select Ingredient',
-    screen: SelectIngredient,
-  },
-  AddItem: {
-    drawerLabel: 'Add Item',
-    screen: AddItem,
+  Items: {
+    drawerLabel: 'Items',
+    screen: Items,
   },
 };
 
