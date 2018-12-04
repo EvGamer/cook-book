@@ -9,7 +9,7 @@ import style from './Items.style';
 
 const mapStateToProps = state => ({
   title: 'Select ingredient',
-  itemList: state.items.list,
+  recipeList: state.items.list,
 });
 
 const mapDispatchToProps = dispatch => ({

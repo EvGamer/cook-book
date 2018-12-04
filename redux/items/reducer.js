@@ -1,7 +1,7 @@
-import { createReducer } from '../utils';
+import { createReducer, withIdMap } from '../utils';
 import { ADD_ITEM, SET_ITEM } from './actions';
 
-const initialState = {
+const initialState = withIdMap({
   list: [
     { id: '1', name: 'Wire' },
     { id: '2', name: 'Board' },
@@ -14,15 +14,15 @@ const initialState = {
     { id: '9', name: 'Iron plate' },
     { id: '10', name: 'Iron ore' },
   ],
-};
+});
 
 
 export default createReducer(initialState, {
-  [ADD_ITEM]: (state, { payload }) => ({
+  [ADD_ITEM]: (state, { payload }) => withIdMap({
     ...state,
     list: [...state.list, payload],
   }),
-  [SET_ITEM]: (state, { payload }) => ({
+  [SET_ITEM]: (state, { payload }) => withIdMap({
     ...state,
     list: state.list.map(item => (item.id === payload.id ? payload : item)),
   }),
