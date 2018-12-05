@@ -116,9 +116,10 @@ class SelectIngredient extends Component {
           <Button
             onPress={this.submit}
             title="Confirm"
+            disabled={!this.props.itemMap[this.state.selected]}
           />
           <Button
-            color="Red"
+            color="red"
             onPress={this.props.cancel}
             title="Cancel"
           />
