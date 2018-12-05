@@ -15,7 +15,7 @@ const IngredientProp = PropTypes.shape({
 class RecipeList extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
-    recipeList: PropTypes.arrayOf(PropTypes.shape({
+    list: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
       time: PropTypes.number,
@@ -23,12 +23,14 @@ class RecipeList extends PureComponent {
       results: PropTypes.arrayOf(IngredientProp),
     })),
     select: PropTypes.func,
+    itemMap: PropTypes.objectOf(PropTypes.object),
   };
 
   static defaultProps = {
     title: 'Recipes',
-    recipeList: [],
+    list: [],
     select() {},
+    itemMap: {},
   };
 
   handleRecipePress = id => {
@@ -40,8 +42,11 @@ class RecipeList extends PureComponent {
       <RecipeEntry
         id={entry.item.id}
         name={entry.item.name}
-
+        time={entry.item.time}
+        ingredients={entry.item.ingredients}
+        results={entry.item.results}
         onPress={this.handleRecipePress}
+        itemMap={this.props.itemMap}
       />
     );
   };
@@ -52,7 +57,7 @@ class RecipeList extends PureComponent {
         <Header>{this.props.title}</Header>
         <FlatList
           keyExtractor={fromId}
-          data={this.props.recipeList}
+          data={this.props.list}
           renderItem={this.renderItem}
         />
       </View>

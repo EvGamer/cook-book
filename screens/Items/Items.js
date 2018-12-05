@@ -88,7 +88,7 @@ class Items extends PureComponent {
       <View style={style.screen}>
         <ItemList
           title="Items"
-          itemList={this.props.itemList}
+          list={this.props.itemList}
           select={this.selectToEdit}
         />
         <Button

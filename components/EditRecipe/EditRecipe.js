@@ -6,13 +6,9 @@ import { v4 as getID } from 'uuid';
 import { Header, SelectIngredient } from '../';
 import style from './EditRecipe.style';
 
-const mapStateToProps = state => ({
-  itemMap: state.items.map,
-});
-
 class EditRecipe extends PureComponent {
   state = {
-    mode: 'edit',
+    mode: 'toEditing',
     id: getID(),
     name: '',
     time: 0,
@@ -20,7 +16,7 @@ class EditRecipe extends PureComponent {
     results: [],
   };
 
-  componentDidMount(){
+  componentDidMount() {
     const { recipe } = this.props;
     if (recipe) {
       this.setState({ ...recipe });
@@ -57,7 +53,7 @@ class EditRecipe extends PureComponent {
   };
 
   cancel = () => {
-    this.setState({ mode: 'edit' });
+    this.setState({ mode: 'toEditing' });
   };
 
   selectIngredient = () => {
@@ -83,13 +79,10 @@ class EditRecipe extends PureComponent {
   renderItem = ({ id, amount }) => (
     <View style={style.item}>
       <Text style={style.itemName}>
-        {this.props.itemMap[id]
+        {amount} x {this.props.itemMap[id]
           ? this.props.itemMap[id].name
           : 'Unknown Item'
         }
-      </Text>
-      <Text style={style.itemAmount}>
-        {amount}
       </Text>
     </View>
   );
@@ -136,10 +129,15 @@ class EditRecipe extends PureComponent {
               this.state.ingredients,
               this.selectIngredient,
             )}
+            {this.renderItemList(
+              'Results',
+              this.state.ingredients,
+              this.selectIngredient,
+            )}
           </View>
         );
     }
   }
 }
 
-export default connect(mapStateToProps)(EditRecipe);
+export default EditRecipe;

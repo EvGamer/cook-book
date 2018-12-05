@@ -10,7 +10,7 @@ const fromId = item => `${item.id}`;
 class ItemList extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
-    itemList: PropTypes.arrayOf(PropTypes.shape({
+    list: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
     })),
@@ -19,7 +19,7 @@ class ItemList extends PureComponent {
 
   static defaultProps = {
     title: 'Items',
-    itemList: [],
+    list: [],
     select() {},
   };
 
@@ -43,7 +43,7 @@ class ItemList extends PureComponent {
         <Header>{this.props.title}</Header>
         <FlatList
           keyExtractor={fromId}
-          data={this.props.itemList}
+          data={this.props.list}
           renderItem={this.renderItem}
         />
       </View>

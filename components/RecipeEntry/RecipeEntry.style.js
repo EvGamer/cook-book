@@ -13,4 +13,10 @@ export default StyleSheet.create({
     fontSize: 25,
     padding: 5,
   },
+  io: {
+    flexDirection: 'row',
+  },
+  ioGroup: {
+    flex: 1,
+  },
 });

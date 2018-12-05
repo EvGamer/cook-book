@@ -29,7 +29,7 @@ class SelectIngredient extends Component {
     title: PropTypes.string,
     itemList: PropTypes.arrayOf(ItemProp),
     itemMap: PropTypes.objectOf(ItemProp),
-    itemRatio: PropTypes.shaoe({
+    itemRatio: PropTypes.shape({
       id: PropTypes.string,
       amount: PropTypes.number,
     }),
@@ -92,7 +92,7 @@ class SelectIngredient extends Component {
         <ItemList
           title={this.props.title}
           select={this.select}
-          itemList={this.props.itemList}
+          list={this.props.itemList}
         />
         <View style={style.item}>
           <Text style={style.itemName}>
@@ -102,7 +102,7 @@ class SelectIngredient extends Component {
             }
           </Text>
           <Text style={style.amountText}>
-            Amount
+            Amount {this.props.amount}
           </Text>
           <Slider
             style={style.amount}
@@ -118,7 +118,9 @@ class SelectIngredient extends Component {
             title="Confirm"
           />
           <Button
+            color="Red"
             onPress={this.props.cancel}
+            title="Cancel"
           />
         </View>
       </View>

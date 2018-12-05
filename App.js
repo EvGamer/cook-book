@@ -9,7 +9,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { DrawerNavigator } from 'react-navigation';
-import { Items } from './screens';
+import { Items, Recipes } from './screens';
 
 import { createStore } from './redux';
 
@@ -17,6 +17,10 @@ const navConfig = {
   Items: {
     drawerLabel: 'Items',
     screen: Items,
+  },
+  Recipes: {
+    drawerLabel: 'Items',
+    screen: Recipes,
   },
 };
 

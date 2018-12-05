@@ -1,5 +1,5 @@
 function mapByID(aMap, item) {
-  aMap[item.id] = item;
+  aMap[item.id] = item; //eslint-disable-line
   return aMap;
 }
 

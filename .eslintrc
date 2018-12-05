@@ -11,6 +11,7 @@
     "react/jsx-curly-brace-presence": "off",
     "react/jsx-filename-extension": "off",
     "react/forbid-prop-types": "off",
-    "react/no-did-mount-set-state": "off"
+    "react/no-did-mount-set-state": "off",
+    "function-paren-newline": "off"
   }
 }

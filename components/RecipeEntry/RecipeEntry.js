@@ -4,10 +4,18 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 import style from './RecipeEntry.style';
 
+const IngredientProp = PropTypes.shape({
+  id: PropTypes.string,
+  amount: PropTypes.number,
+});
+
 class RecipeEntry extends PureComponent {
   static propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string,
+    time: PropTypes.number,
+    ingredients: PropTypes.arrayOf(IngredientProp),
+    results: PropTypes.arrayOf(IngredientProp),
     onPress: PropTypes.func,
     itemMap: PropTypes.objectOf(PropTypes.shape({
       id: PropTypes.string,
@@ -19,17 +27,40 @@ class RecipeEntry extends PureComponent {
     name: '',
     onPress() {},
     itemMap: {},
+    time: 0,
+    ingredients: [],
+    results: [],
   };
 
   handlePress = () => {
     this.props.onPress(this.props.id);
   };
 
+  renderIngredient = ({ id, amount }) => (
+    <View style={style.ingredient} key={id}>
+      <Text style={style.ingredientText}>
+        {amount} x {this.props.itemMap[id]
+          ? this.props.itemMap[id].name
+          : 'Unknown'
+        }
+      </Text>
+    </View>
+  );
+
   render() {
     return (
       <TouchableOpacity onPress={this.handlePress}>
         <View style={style.frame}>
           <Text style={style.text}>{this.props.name}</Text>
+          <Text style={style.time}>Time: {this.props.time}</Text>
+          <View style={style.io}>
+            <View style={style.ioGroup}>
+              {this.props.ingredients.map(this.renderIngredient)}
+            </View>
+            <View style={style.ioGroup}>
+              {this.props.results.map(this.renderIngredient)}
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     );
