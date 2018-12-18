@@ -1,4 +1,4 @@
-import { createReducer, withIdMap } from '../utils';
+import { createReducer, withIdMap, replaceEntry } from '../utils';
 import { ADD_RECIPE, SET_RECIPE } from './actions';
 
 const initialState = withIdMap({
@@ -37,6 +37,6 @@ export default createReducer(initialState, {
   }),
   [SET_RECIPE]: (state, { payload }) => withIdMap({
     ...state,
-    list: state.list.map(recipe => (recipe.id === payload.id ? payload : recipe)),
+    list: replaceEntry(state.list, payload),
   }),
 });

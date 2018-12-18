@@ -8,8 +8,7 @@ import { setItem, addItem } from '../../redux/items/actions';
 import style from './Items.style';
 
 const mapStateToProps = state => ({
-  title: 'Select ingredient',
-  recipeList: state.items.list,
+  itemList: state.items.list,
 });
 
 const mapDispatchToProps = dispatch => ({
