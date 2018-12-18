@@ -40,7 +40,7 @@ class ItemList extends PureComponent {
   render() {
     return (
       <View style={style.screen}>
-        <Header>{this.props.title} {this.props.list.length}</Header>
+        <Header>{this.props.title}</Header>
         <FlatList
           keyExtractor={fromId}
           data={this.props.list}

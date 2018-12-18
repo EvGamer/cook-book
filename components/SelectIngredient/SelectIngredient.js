@@ -78,13 +78,50 @@ class SelectIngredient extends Component {
     this.props.submit({
       id: selected,
       amount,
-      maxAmount: getMaxAmount(amount),
     });
   };
 
   select = (selected) => {
     this.setState({ selected });
   };
+
+  renderItemPanel() {
+    if (this.state.selected < 0) {
+      return null;
+    }
+    return (
+      <View style={style.item}>
+        <Text style={style.itemName}>
+          {this.props.itemMap[this.state.selected]
+            ? this.props.itemMap[this.state.selected].name
+            : 'Not selected'
+          }
+        </Text>
+        <Text style={style.amountHeader}>
+          Amount {this.props.amount}
+        </Text>
+        <View style={style.amount}>
+          <Text style={style.amountText}>
+            {this.state.amount}
+          </Text>
+          <Slider
+            style={style.amountSlider}
+            value={this.state.amount}
+            onValueChange={this.setAmount}
+            onSlidingComplete={this.setMaxAmount}
+            minimumValue={1}
+            maximumValue={this.state.maxAmount}
+            step={1}
+          />
+        </View>
+        <Button
+          onPress={this.submit}
+          title="Confirm"
+          disabled={!this.props.itemMap[this.state.selected]}
+        />
+      </View>
+    );
+  }
 
   render() {
     return (
@@ -94,41 +131,13 @@ class SelectIngredient extends Component {
           select={this.select}
           list={this.props.itemList}
         />
-        <View style={style.item}>
-          <Text style={style.itemName}>
-            {this.props.itemMap[this.state.selected]
-              ? this.props.itemMap[this.state.selected].name
-              : 'Not selected'
-            }
-          </Text>
-          <Text style={style.amountHeader}>
-            Amount {this.props.amount}
-          </Text>
-          <View style={style.amount}>
-            <Text style={style.amountText}>
-              {this.state.amount}
-            </Text>
-            <Slider
-              style={style.amountSlider}
-              value={this.state.amount}
-              onValueChange={this.setAmount}
-              onSlidingComplete={this.setMaxAmount}
-              minimumValue={1}
-              maximumValue={this.state.maxAmount}
-              step={1}
-            />
-          </View>
-          <Button
-            onPress={this.submit}
-            title="Confirm"
-            disabled={!this.props.itemMap[this.state.selected]}
-          />
-          <Button
-            color="red"
-            onPress={this.props.cancel}
-            title="Cancel"
-          />
-        </View>
+        {this.renderItemPanel()}
+
+        <Button
+          color="red"
+          onPress={this.props.cancel}
+          title="Cancel"
+        />
       </View>
     );
   }

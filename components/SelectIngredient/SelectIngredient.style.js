@@ -10,8 +10,13 @@ export default StyleSheet.create({
   },
   amount: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   amountSlider: {
     flex: 1,
+  },
+  amountText: {
+    fontSize: 24,
+    marginLeft: 10,
   },
 });

@@ -22,8 +22,13 @@ const mapStateToProps = state => ({
   recipeList: state.recipes.list,
 });
 
-const mapDispatchToProps = bindActionCreators({
-  addRecipe, setRecipe,
+const mapDispatchToProps = dispatch => ({
+  addRecipe(recipe) {
+    dispatch(addRecipe(recipe));
+  },
+  setRecipe(recipe) {
+    dispatch(setRecipe(recipe));
+  },
 });
 
 class Recipes extends PureComponent {

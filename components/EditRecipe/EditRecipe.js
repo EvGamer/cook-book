@@ -1,14 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TextInput } from 'react-native';
 import { v4 as getID } from 'uuid';
 
 import { Header, SelectIngredient } from '../';
 import style from './EditRecipe.style';
 
+const MODES = {
+  toEditing: 'toEditing',
+  selectIngredient: 'selectIngredient',
+  selectResult: 'selectResult',
+};
+
 class EditRecipe extends PureComponent {
+  constructor(props, context) {
+    super(props, context);
+    this.addIngredient = this.addItem.bind(this, 'ingredients');
+    this.addResult = this.addItem.bind(this, 'results');
+  }
+
   state = {
-    mode: 'toEditing',
+    mode: MODES.toEditing,
     id: getID(),
     name: '',
     time: 0,
@@ -44,36 +56,28 @@ class EditRecipe extends PureComponent {
         amount: PropTypes.number,
       })),
     }),
+    submit: PropTypes.func,
+    cancel: PropTypes.func,
   };
 
   static defaultProps = {
     itemMap: {},
     title: 'Edit Recipe',
     recipe: null,
+    submit() {},
+    cancel() {},
   };
 
   cancel = () => {
-    this.setState({ mode: 'toEditing' });
+    this.setState({ mode: MODES.toEditing });
   };
 
   selectIngredient = () => {
-    this.setState({ mode: 'selectIngredient' });
+    this.setState({ mode: MODES.selectIngredient });
   };
 
   selectResult = () => {
-    this.setState({ mode: 'selectOutput' });
-  };
-
-  addIngredient = (ingredient) => {
-    this.setState((state) => ({
-      ingredients: [ ...state.ingedients, ingredient ],
-    }));
-  };
-
-  addResult = (result) => {
-    this.setState((state) => ({
-      results: [ ...state.ingedients, result ],
-    }));
+    this.setState({ mode: MODES.selectResult });
   };
 
   renderItem = ({ id, amount }) => (
@@ -87,7 +91,24 @@ class EditRecipe extends PureComponent {
     </View>
   );
 
-  renderItemList(title, list, addItem){
+  submit = () => {
+    const { id, name, time, ingredients, results } = this.state;
+    this.props.submit({ id, name, time, ingredients, results });
+  };
+
+  changeName = (name) => {
+    this.setState({ name });
+  };
+
+  addItem(group, item) {
+    this.setState(state => ({
+      ...state,
+      mode: MODES.toEditing,
+      [group]: [...state[group], item],
+    }));
+  }
+
+  renderItemList(title, list, addItem) {
     return (
       <View style={style.group}>
         <Text style={style.groupHeader}>{title}</Text>
@@ -104,7 +125,7 @@ class EditRecipe extends PureComponent {
 
   render() {
     switch (this.state.mode) {
-      case 'selectIngredient':
+      case MODES.selectIngredient:
         return (
           <SelectIngredient
             title="Add Ingredient"
@@ -112,7 +133,7 @@ class EditRecipe extends PureComponent {
             submit={this.addIngredient}
           />
         );
-      case 'selectResult':
+      case MODES.selectResult:
         return (
           <SelectIngredient
             title="Add Result"
@@ -124,6 +145,10 @@ class EditRecipe extends PureComponent {
         return (
           <View style={style.screen}>
             <Header>{this.props.title}</Header>
+            <TextInput
+              value={this.state.name}
+              onChangeText={this.changeName}
+            />
             {this.renderItemList(
               'Ingredients',
               this.state.ingredients,
@@ -131,9 +156,19 @@ class EditRecipe extends PureComponent {
             )}
             {this.renderItemList(
               'Results',
-              this.state.ingredients,
-              this.selectIngredient,
+              this.state.results,
+              this.selectResult,
             )}
+            <Button
+              title="Confirm"
+              color="green"
+              onPress={this.submit}
+            />
+            <Button
+              title="Cancel"
+              color="red"
+              onPress={this.props.cancel}
+            />
           </View>
         );
     }
