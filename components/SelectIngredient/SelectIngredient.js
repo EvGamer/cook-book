@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View, Text, Button, Slider } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
 import style from './SelectIngredient.style';
-import { ItemList } from '../';
+import { ItemList, NumberSlider } from '../';
 
 const ItemProp = PropTypes.shape({
   id: PropTypes.string,
@@ -15,14 +15,6 @@ const mapStateToProps = state => ({
   itemList: state.items.list,
   itemMap: state.items.map,
 });
-
-const defaultMaxAmount = 20;
-const maxAmountLeeway = 10;
-
-const getMaxAmount = amount => Math.max(
-  defaultMaxAmount,
-  amount + maxAmountLeeway,
-);
 
 class SelectIngredient extends Component {
   static propTypes = {
@@ -51,7 +43,6 @@ class SelectIngredient extends Component {
   state = {
     selected: -1,
     amount: 0,
-    maxAmount: defaultMaxAmount,
   };
 
   componentDidMount(){
@@ -60,16 +51,9 @@ class SelectIngredient extends Component {
       this.setState({
         selected: itemRatio.id,
         amount: itemRatio.amount,
-        maxAmount: getMaxAmount(itemRatio.amount),
       });
     }
   }
-
-  setMaxAmount = () => {
-    this.setState(state => ({
-      maxAmount: getMaxAmount(state.amount),
-    }));
-  };
 
   setAmount = (value) => {
     this.setState({ amount: value });
@@ -100,25 +84,17 @@ class SelectIngredient extends Component {
           }
         </Text>
         <Text style={style.amountHeader}>
-          Amount {this.props.amount}
+          Amount
         </Text>
-        <View style={style.amount}>
-          <Text style={style.amountText}>
-            {this.state.amount}
-          </Text>
-          <Slider
-            style={style.amountSlider}
-            value={this.state.amount}
-            onValueChange={this.setAmount}
-            onSlidingComplete={this.setMaxAmount}
-            minimumValue={1}
-            maximumValue={this.state.maxAmount}
-            step={1}
-          />
-        </View>
-        {(this.props.remove != null) && (
+        <NumberSlider
+          value={this.state.amount}
+          onValueChange={this.setAmount}
+          minimumValue={1}
+          step={1}
+        />
+        {(this.props.itemRatio != null) && (this.props.remove != null) && (
           <Button
-            onPress={this.submit}
+            onPress={this.props.remove}
             title="Remove"
             disabled={!this.props.itemMap[this.state.selected]}
           />

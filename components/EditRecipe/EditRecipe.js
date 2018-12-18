@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { v4 as getID } from 'uuid';
+import { unionBy, without } from 'lodash';
 
 import { Header, SelectIngredient, IngredientList } from '../';
 import style from './EditRecipe.style';
@@ -22,11 +23,16 @@ const MODES = {
   editResult: 'editResult',
 };
 
+const GROUPES = {
+  ingredients: 'ingredients',
+  results: 'results',
+};
+
 function byId(obj, item) {
   obj[item.id] = item; //eslint-disable-line
   return obj;
 }
-const createIdMap = list => list.map(byId, {});
+const createIdMap = list => list.reduce(byId, {});
 
 class EditRecipe extends PureComponent {
   static propTypes = {
@@ -62,19 +68,23 @@ class EditRecipe extends PureComponent {
 
   constructor(props, context) {
     super(props, context);
-    this.addIngredient = this.addItem.bind(this, 'ingredients');
-    this.addResult = this.addItem.bind(this, 'results');
+    this.addIngredient = this.addItem.bind(
+      this, GROUPES.ingredients, MODES.listIngredients,
+    );
+    this.addResult = this.addItem.bind(
+      this, GROUPES.results, MODES.listResults,
+    );
     this.replaceIngredient = this.replaceItem.bind(
-      this, 'ingredients', MODES.listIngredients,
+      this, GROUPES.ingredients, MODES.listIngredients,
     );
     this.replaceResult = this.replaceItem.bind(
-      this, 'results', MODES.listResults,
+      this, GROUPES.results, MODES.listResults,
     );
     this.removeIngredient = this.removeItem.bind(
-      this, 'ingredients', MODES.listIngredients,
+      this, GROUPES.ingredients, MODES.listIngredients,
     );
     this.removeResult = this.removeItem.bind(
-      this, 'results', MODES.listResults,
+      this, GROUPES.results, MODES.listResults,
     );
     this.cancel = this.setMode.bind(this, MODES.toEditing);
     this.selectIngredient = this.setMode.bind(this, MODES.selectIngredient);
@@ -141,11 +151,11 @@ class EditRecipe extends PureComponent {
     this.setState({ mode, selectedIngredient: -1 });
   }
 
-  addItem(group, item) {
+  addItem(group, mode,  item) {
     this.setState(state => ({
       ...state,
-      mode: MODES.toEditing,
-      [group]: [...state[group], item],
+      mode,
+      [group]: unionBy([item], state[group], 'id'),
     }));
   }
 
@@ -153,7 +163,7 @@ class EditRecipe extends PureComponent {
     this.setState(state => ({
       ...state,
       mode,
-      [group]: state[group].filter(this.isNotSelectedIngredient),
+      [group]: state[group].filter(this.isUnselectedItem),
     }));
   }
 
@@ -166,14 +176,14 @@ class EditRecipe extends PureComponent {
       ...state,
       mode,
       [group]: state[group].map(replaceCandidate => (
-        replaceCandidate.id === this.state.selectedIngredient
+        replaceCandidate.id === state.selectedIngredient
           ? item
           : replaceCandidate
       )),
     }));
   }
 
-  isNotSelectedIngredient = (item) => item.id !== this.state.selectedIngredient;
+  isUnselectedItem = item => item.id !== this.state.selectedIngredient;
 
   changeName = (name) => {
     this.setState({ name });
