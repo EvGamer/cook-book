@@ -77,7 +77,7 @@ class EditRecipe extends PureComponent {
   };
 
   renderItem = ({ id, amount }) => (
-    <View style={style.item}>
+    <View style={style.item} key={id}>
       <Text style={style.itemName}>
         {amount} x {this.props.itemMap[id]
           ? this.props.itemMap[id].name

@@ -7,6 +7,11 @@ export default StyleSheet.create({
     flex: 1,
   },
   item: {
-    height: 300,
+  },
+  amount: {
+    flexDirection: 'row',
+  },
+  amountSlider: {
+    flex: 1,
   },
 });

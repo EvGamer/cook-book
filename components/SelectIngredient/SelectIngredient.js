@@ -12,7 +12,7 @@ const ItemProp = PropTypes.shape({
 });
 
 const mapStateToProps = state => ({
-  recipeList: state.items.list,
+  itemList: state.items.list,
   itemMap: state.items.map,
 });
 
@@ -70,7 +70,7 @@ class SelectIngredient extends Component {
   };
 
   setAmount = (value) => {
-    this.setState({ value });
+    this.setState({ amount: value });
   };
 
   submit = () => {
@@ -101,18 +101,23 @@ class SelectIngredient extends Component {
               : 'Not selected'
             }
           </Text>
-          <Text style={style.amountText}>
+          <Text style={style.amountHeader}>
             Amount {this.props.amount}
           </Text>
-          <Slider
-            style={style.amount}
-            value={this.state.amount}
-            onValueChange={this.setAmount}
-            onSlidingComplete={this.setMaxAmount}
-            minimumValue={1}
-            maximumValue={this.state.maxAmount}
-            step={1}
-          />
+          <View style={style.amount}>
+            <Text style={style.amountText}>
+              {this.state.amount}
+            </Text>
+            <Slider
+              style={style.amountSlider}
+              value={this.state.amount}
+              onValueChange={this.setAmount}
+              onSlidingComplete={this.setMaxAmount}
+              minimumValue={1}
+              maximumValue={this.state.maxAmount}
+              step={1}
+            />
+          </View>
           <Button
             onPress={this.submit}
             title="Confirm"
