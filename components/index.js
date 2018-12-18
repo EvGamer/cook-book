@@ -6,5 +6,6 @@ export { default as SelectIngredient } from './SelectIngredient/SelectIngredient
 export { default as RecipeEntry } from './RecipeEntry/RecipeEntry';
 export { default as RecipeList } from './RecipeList/RecipeList';
 export { default as EditRecipe } from './EditRecipe/EditRecipe';
+export { default as IngredientList } from './IngredientList/IngredientList';
 
 

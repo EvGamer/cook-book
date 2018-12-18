@@ -35,6 +35,7 @@ class SelectIngredient extends Component {
     }),
     submit: PropTypes.func,
     cancel: PropTypes.func,
+    remove: PropTypes.func,
   };
 
   static defaultProps = {
@@ -44,6 +45,7 @@ class SelectIngredient extends Component {
     itemRatio: null,
     submit() {},
     cancel() {},
+    remove: null,
   };
 
   state = {
@@ -114,11 +116,19 @@ class SelectIngredient extends Component {
             step={1}
           />
         </View>
+        {(this.props.remove != null) && (
+          <Button
+            onPress={this.submit}
+            title="Remove"
+            disabled={!this.props.itemMap[this.state.selected]}
+          />
+        )}
         <Button
           onPress={this.submit}
           title="Confirm"
           disabled={!this.props.itemMap[this.state.selected]}
         />
+
       </View>
     );
   }
