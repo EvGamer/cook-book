@@ -7,9 +7,9 @@ import style from './NumberSlider.style';
 const defaultMaxAmount = 20;
 const maxAmountLeeway = 10;
 
-const getMaxAmount = amount => Math.max(
-  defaultMaxAmount,
-  amount + maxAmountLeeway,
+const getMaxAmount = (amount, step) => Math.max(
+  defaultMaxAmount * step,
+  amount + (maxAmountLeeway * step),
 );
 
 class NumberSlider extends Component {
@@ -17,6 +17,7 @@ class NumberSlider extends Component {
     value: PropTypes.number,
     minimumValue: PropTypes.number,
     step: PropTypes.number,
+    fractionalDigits: PropTypes.number,
     onValueChange: PropTypes.func,
   };
 
@@ -24,19 +25,20 @@ class NumberSlider extends Component {
     value: 0,
     minimumValue: 0,
     step: 1,
+    fractionalDigits: 0,
     onValueChange() {},
   };
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      maxAmount: getMaxAmount(props.value),
+      maxAmount: getMaxAmount(props.value, props.step),
     };
   }
 
   setMaxAmount = () => {
     this.setState({
-      maxAmount: getMaxAmount(this.props.value),
+      maxAmount: getMaxAmount(this.props.value, this.props.step),
     });
   };
 
@@ -44,7 +46,7 @@ class NumberSlider extends Component {
     return (
       <View style={style.container}>
         <Text style={style.number}>
-          {this.props.value}
+          {this.props.value.toFixed((`${this.props.step}`.split('.')[1] || []).length)}
         </Text>
         <Slider
           style={style.slider}

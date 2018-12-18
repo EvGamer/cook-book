@@ -8,9 +8,14 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { v4 as getID } from 'uuid';
-import { unionBy, without } from 'lodash';
+import { unionBy } from 'lodash';
 
-import { Header, SelectIngredient, IngredientList } from '../';
+import {
+  Header,
+  SelectIngredient,
+  IngredientList,
+  NumberSlider,
+} from '../';
 import style from './EditRecipe.style';
 
 const MODES = {
@@ -143,9 +148,7 @@ class EditRecipe extends PureComponent {
     }
   }
 
-  setMode(mode) {
-    this.setState({ mode });
-  }
+  setMode(mode) { this.setState({ mode }); }
 
   setModeAndUnselect(mode) {
     this.setState({ mode, selectedIngredient: -1 });
@@ -185,9 +188,9 @@ class EditRecipe extends PureComponent {
 
   isUnselectedItem = item => item.id !== this.state.selectedIngredient;
 
-  changeName = (name) => {
-    this.setState({ name });
-  };
+  changeName = (name) => { this.setState({ name }); };
+
+  setTime = (time) => { this.setState({ time }); };
 
   submit = () => {
     const {
@@ -300,6 +303,14 @@ class EditRecipe extends PureComponent {
               this.state.results,
               this.listResults,
             )}
+            <Text style={style.label}>
+              Time
+            </Text>
+            <NumberSlider
+              value={this.state.time}
+              onValueChange={this.setTime}
+              step={0.05}
+            />
             <Button
               title="Confirm"
               color="green"
