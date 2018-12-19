@@ -12,6 +12,7 @@ import { DrawerNavigator } from 'react-navigation';
 import { Items, Recipes } from './screens';
 
 import { createStore } from './redux';
+import { storageLoad, storageSave } from './redux/actions';
 
 const navConfig = {
   Items: {
@@ -25,6 +26,7 @@ const navConfig = {
 };
 
 const store = createStore();
+store.dispatch(storageLoad());
 
 const Navigator = DrawerNavigator(navConfig);
 

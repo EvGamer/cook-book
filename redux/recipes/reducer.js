@@ -1,5 +1,5 @@
 import { createReducer, withIdMap, replaceEntry } from '../utils';
-import { ADD_RECIPE, SET_RECIPE } from './actions';
+import { ADD_RECIPE, SET_RECIPE, STORAGE_LOAD_SUCCESS } from '../actions';
 
 const initialState = withIdMap({
   list: [
@@ -38,5 +38,9 @@ export default createReducer(initialState, {
   [SET_RECIPE]: (state, { payload }) => withIdMap({
     ...state,
     list: replaceEntry(state.list, payload),
+  }),
+  [STORAGE_LOAD_SUCCESS]: (state, { payload }) => withIdMap({
+    ...state,
+    list: payload.recipeList,
   }),
 });

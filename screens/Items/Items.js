@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { View, Button } from 'react-native';
 
 import { ItemList, EditItem } from '../../components';
-import { setItem, addItem } from '../../redux/items/actions';
+import { setItem, addItem, storageSave } from '../../redux/actions';
 import style from './Items.style';
 
 const mapStateToProps = state => ({
@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setItem(item) { dispatch(setItem(item)); },
   addItem(item) { dispatch(addItem(item)); },
+  saveData() { dispatch(storageSave()); },
 });
 
 class Items extends PureComponent {
@@ -21,12 +22,14 @@ class Items extends PureComponent {
     itemList: PropTypes.arrayOf(PropTypes.object),
     setItem: PropTypes.func,
     addItem: PropTypes.func,
+    saveData: PropTypes.func,
   };
 
   static defaultProps = {
     itemList: [],
     setItem() {},
     addItem() {},
+    saveData() {},
   };
 
   state = {
@@ -38,6 +41,11 @@ class Items extends PureComponent {
     this.props.setItem(item);
     this.setState({ selected: null });
   };
+
+  componentWillUnmount() {
+    this.props.saveData();
+  }
+
 
   addItem = (item) => {
     this.props.addItem(item);

@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { View, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { EditRecipe, RecipeList } from '../../components';
-import { addRecipe, setRecipe } from '../../redux/recipes/actions';
+import { addRecipe, setRecipe, storageSave } from '../../redux/actions';
 import style from './Recipes.style';
 
 const MODES = {
@@ -23,12 +22,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addRecipe(recipe) {
-    dispatch(addRecipe(recipe));
-  },
-  setRecipe(recipe) {
-    dispatch(setRecipe(recipe));
-  },
+  addRecipe(recipe) { dispatch(addRecipe(recipe)); },
+  setRecipe(recipe) {dispatch(setRecipe(recipe)); },
+  saveData() { dispatch(storageSave()); },
 });
 
 class Recipes extends PureComponent {
@@ -40,6 +36,7 @@ class Recipes extends PureComponent {
     })),
     addRecipe: PropTypes.func,
     setRecipe: PropTypes.func,
+    saveData: PropTypes.func,
   };
 
   static defaultProps = {
@@ -48,6 +45,7 @@ class Recipes extends PureComponent {
     recipeMap: {},
     addRecipe() {},
     setRecipe() {},
+    saveData() {},
   };
 
   state = {
@@ -59,6 +57,10 @@ class Recipes extends PureComponent {
     this.props.setRecipe(recipe);
     this.backToSelection();
   };
+
+  componentWillUnmount() {
+    this.props.saveData();
+  }
 
   addRecipe = (recipe) => {
     this.props.addRecipe(recipe);
