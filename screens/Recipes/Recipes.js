@@ -4,7 +4,7 @@ import { View, Button } from 'react-native';
 import { connect } from 'react-redux';
 
 import { EditRecipe, RecipeList } from '../../components';
-import { addRecipe, setRecipe, storageSave } from '../../redux/actions';
+import { addRecipe, setRecipe, removeRecipe, storageSave } from '../../redux/actions';
 import style from './Recipes.style';
 
 const MODES = {
@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addRecipe(recipe) { dispatch(addRecipe(recipe)); },
-  setRecipe(recipe) {dispatch(setRecipe(recipe)); },
+  setRecipe(recipe) { dispatch(setRecipe(recipe)); },
+  removeRecipe(id) { dispatch(removeRecipe(id)); },
   saveData() { dispatch(storageSave()); },
 });
 
@@ -36,6 +37,7 @@ class Recipes extends PureComponent {
     })),
     addRecipe: PropTypes.func,
     setRecipe: PropTypes.func,
+    removeRecipe: PropTypes.func,
     saveData: PropTypes.func,
   };
 
@@ -46,6 +48,7 @@ class Recipes extends PureComponent {
     addRecipe() {},
     setRecipe() {},
     saveData() {},
+    removeRecipe() {},
   };
 
   state = {
@@ -64,6 +67,11 @@ class Recipes extends PureComponent {
 
   addRecipe = (recipe) => {
     this.props.addRecipe(recipe);
+    this.backToSelection();
+  };
+
+  removeRecipe = (id) => {
+    this.props.removeRecipe(id);
     this.backToSelection();
   };
 
@@ -93,6 +101,7 @@ class Recipes extends PureComponent {
         submit={submit}
         cancel={this.backToSelection}
         itemMap={this.props.itemMap}
+        remove={this.removeRecipe}
       />
     );
   }

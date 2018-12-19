@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { View, Button } from 'react-native';
 
 import { ItemList, EditItem } from '../../components';
-import { setItem, addItem, storageSave } from '../../redux/actions';
+import { setItem, addItem, storageSave, removeItem } from '../../redux/actions';
 import style from './Items.style';
 
 const mapStateToProps = state => ({
@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => ({
   setItem(item) { dispatch(setItem(item)); },
   addItem(item) { dispatch(addItem(item)); },
   saveData() { dispatch(storageSave()); },
+  removeItem(id) { dispatch(removeItem(id)); },
 });
 
 class Items extends PureComponent {
@@ -22,6 +23,7 @@ class Items extends PureComponent {
     itemList: PropTypes.arrayOf(PropTypes.object),
     setItem: PropTypes.func,
     addItem: PropTypes.func,
+    removeItem: PropTypes.func,
     saveData: PropTypes.func,
   };
 
@@ -29,6 +31,7 @@ class Items extends PureComponent {
     itemList: [],
     setItem() {},
     addItem() {},
+    removeItem() {},
     saveData() {},
   };
 
@@ -50,6 +53,11 @@ class Items extends PureComponent {
   addItem = (item) => {
     this.props.addItem(item);
     this.setState({ isCreatingItem: false });
+  };
+
+  removeItem = (id) => {
+    this.props.removeItem(id);
+    this.setState({ selected: null });
   };
 
   openCreateItemScreen = () => {
@@ -88,6 +96,7 @@ class Items extends PureComponent {
           title="Edit Item"
           submit={this.setItem}
           cancel={this.cancelEditing}
+          remove={this.removeItem}
         />
       );
     }

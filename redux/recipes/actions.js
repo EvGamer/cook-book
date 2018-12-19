@@ -15,3 +15,12 @@ export function setRecipe(payload) {
     payload,
   };
 }
+
+export const REMOVE_RECIPE = 'REMOVE_RECIPE';
+
+export function removeRecipe(id) {
+  return {
+    type: REMOVE_RECIPE,
+    id,
+  };
+}

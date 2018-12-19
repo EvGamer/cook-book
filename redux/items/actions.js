@@ -16,3 +16,12 @@ export function setItem(payload) {
   };
 }
 
+export const REMOVE_ITEM = 'REMOVE_ITEM';
+
+export function removeItem(id) {
+  return {
+    type: REMOVE_ITEM,
+    id,
+  };
+}
+

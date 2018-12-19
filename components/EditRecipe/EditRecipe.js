@@ -61,6 +61,7 @@ class EditRecipe extends PureComponent {
     }),
     submit: PropTypes.func,
     cancel: PropTypes.func,
+    remove: PropTypes.func,
   };
 
   static defaultProps = {
@@ -69,6 +70,7 @@ class EditRecipe extends PureComponent {
     recipe: null,
     submit() {},
     cancel() {},
+    remove: null,
   };
 
   constructor(props, context) {
@@ -199,6 +201,13 @@ class EditRecipe extends PureComponent {
     this.props.submit({ id, name, time, ingredients, results });
   };
 
+  remove = () => {
+    const { remove, recipe } = this.props;
+    if (remove && recipe) {
+      remove(recipe.id);
+    }
+  };
+
   renderItem = ({ id, amount }) => (
     <View style={style.item} key={id}>
       <Text style={style.itemName}>
@@ -311,6 +320,13 @@ class EditRecipe extends PureComponent {
               onValueChange={this.setTime}
               step={0.05}
             />
+            {(this.props.recipe && this.props.remove) && (
+              <Button
+                onPress={this.remove}
+                title="Remove"
+                color="red"
+              />
+            )}
             <Button
               title="Confirm"
               color="green"
@@ -318,7 +334,6 @@ class EditRecipe extends PureComponent {
             />
             <Button
               title="Cancel"
-              color="red"
               onPress={this.props.cancel}
             />
           </View>

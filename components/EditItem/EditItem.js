@@ -14,6 +14,7 @@ class EditItem extends Component {
     }),
     submit: PropTypes.func,
     cancel: PropTypes.func,
+    remove: PropTypes.func,
   };
 
   static defaultProps = {
@@ -21,6 +22,7 @@ class EditItem extends Component {
     item: null,
     submit() {},
     cancel() {},
+    remove: null,
   };
 
   constructor(props, context){
@@ -55,6 +57,13 @@ class EditItem extends Component {
     this.props.cancel();
   };
 
+  remove = () => {
+    const { remove, item } = this.props;
+    if (remove && item) {
+      remove(item.id);
+    }
+  };
+
   render() {
     return (
       <View>
@@ -66,14 +75,21 @@ class EditItem extends Component {
             value={this.state.name}
           />
         </View>
+        {(this.props.item && this.props.remove) && (
+          <Button
+            onPress={this.remove}
+            title="Remove"
+            color="red"
+          />
+        )}
         <Button
           onPress={this.submit}
           title="Submit"
+          color="green"
         />
         <Button
           onPress={this.cancel}
           title="Cancel"
-          color="red"
         />
       </View>
     );
