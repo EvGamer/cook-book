@@ -4,7 +4,7 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import { some, forOwn, entries } from 'lodash';
 
 import style from './Chain.style';
-import ProdTable from 'ProdTable';
+import ProdTable from './ProdTable';
 import {
   Header,
   RecipeList,
