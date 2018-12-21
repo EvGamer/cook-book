@@ -24,13 +24,15 @@ class RecipeList extends PureComponent {
     })),
     select: PropTypes.func,
     itemMap: PropTypes.objectOf(PropTypes.object),
+    noRecipeNames: PropTypes.boolean,
   };
 
   static defaultProps = {
-    title: 'Recipes',
+    title: null,
     list: [],
     select() {},
     itemMap: {},
+    noRecipeNames: false,
   };
 
   handleRecipePress = id => {
@@ -45,8 +47,10 @@ class RecipeList extends PureComponent {
         time={entry.item.time}
         ingredients={entry.item.ingredients}
         results={entry.item.results}
+        refineries={entry.item.refineries}
         onPress={this.handleRecipePress}
         itemMap={this.props.itemMap}
+        noRecipeNames={this.props.noRecipeNames}
       />
     );
   };
@@ -54,7 +58,9 @@ class RecipeList extends PureComponent {
   render() {
     return (
       <View style={style.screen}>
-        <Header>{this.props.title}</Header>
+        {this.props.title != null && (
+          <Header>{this.props.title}</Header>
+        )}
         <FlatList
           keyExtractor={fromId}
           data={this.props.list}

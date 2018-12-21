@@ -14,6 +14,7 @@ class RecipeEntry extends PureComponent {
     id: PropTypes.string.isRequired,
     name: PropTypes.string,
     time: PropTypes.number,
+    refineries: PropTypes.number,
     ingredients: PropTypes.arrayOf(IngredientProp),
     results: PropTypes.arrayOf(IngredientProp),
     onPress: PropTypes.func,
@@ -21,6 +22,7 @@ class RecipeEntry extends PureComponent {
       id: PropTypes.string,
       name: PropTypes.string,
     })),
+    noRecipeNames: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -28,8 +30,10 @@ class RecipeEntry extends PureComponent {
     onPress() {},
     itemMap: {},
     time: 0,
+    refineries: 0,
     ingredients: [],
     results: [],
+    noRecipeNames: false,
   };
 
   handlePress = () => {
@@ -51,8 +55,13 @@ class RecipeEntry extends PureComponent {
     return (
       <TouchableOpacity onPress={this.handlePress}>
         <View style={style.frame}>
-          <Text style={style.text}>{this.props.name}</Text>
+          {this.props.noRecipeNames && (
+            <Text style={style.text}>{this.props.name}</Text>
+          )}
           <Text style={style.time}>Time: {this.props.time}</Text>
+          {this.props.refineries && (
+            <Text style={style.time}>Refineries: {this.props.refineries}</Text>
+          )}
           <View style={style.io}>
             <View style={style.ioGroup}>
               {this.props.ingredients.map(this.renderIngredient)}
